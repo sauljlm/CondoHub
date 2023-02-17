@@ -1,0 +1,37 @@
+{
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
+    "autoprefixer": "^10.4.12",
+    "eslint": "^8.24.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "parcel": "^2.7.0",
+    "postcss": "^8.4.16",
+    "prettier": "^2.7.1",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.1.8"
+  },
+  "scripts": {
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+    "dev": "parcel src/index.html",
+    "prod": "parcel build src/index.html"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "firebase": "^9.10.0",
+    "latest": "^0.2.0",
+    "node": "^18.9.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.4.1"
+  },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
+}

@@ -1,0 +1,7 @@
+@tailwind base;
+html {
+    scroll-behavior: smooth;
+    transition: ease all .5s;
+  }
+@tailwind components;
+@tailwind utilities;
