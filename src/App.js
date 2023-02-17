@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import NavBar from "./components/navBar";
 
 const App = () => {
   return (
     <div className="bg-[#fffefa] scroll-smooth">
+      <NavBar></NavBar>
       <BrowserRouter>
         {/* <Navbar></Navbar> */}
         <Routes>
