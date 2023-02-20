@@ -12,6 +12,7 @@
     ]
   },
   "hosting": {
+    "site": "condoplus-6ad1a",
     "public": "dist",
     "ignore": [
       "firebase.json",
