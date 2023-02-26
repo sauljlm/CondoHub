@@ -6,6 +6,7 @@ import Login from "./components/login";
 import NavBar from "./components/navBar";
 import Newsletter from "./components/Newsletter/newsletter";
 import Amenidades from "./components/amenidades";
+import Reservations from "./components/reservations";
 
 const App = () => {
   return (
@@ -13,7 +14,7 @@ const App = () => {
       <NavBar></NavBar>
       <Faq></Faq>
       <Login></Login>
-      <Newsletter></Newsletter>
+      <Reservations></Reservations>
       <Amenidades></Amenidades>
       <BrowserRouter>
         {/* <Navbar></Navbar> */}
