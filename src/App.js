@@ -5,6 +5,7 @@ import Faq from "./components/faq";
 import Login from "./components/login";
 import NavBar from "./components/navBar";
 import Newsletter from "./components/Newsletter/newsletter";
+import Amenidades from "./components/amenidades";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Faq></Faq>
       <Login></Login>
       <Newsletter></Newsletter>
+      <Amenidades></Amenidades>
       <BrowserRouter>
         {/* <Navbar></Navbar> */}
         <Routes>
