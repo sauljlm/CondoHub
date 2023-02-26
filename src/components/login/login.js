@@ -8,7 +8,7 @@ export default () => {
             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Log in to your account</h3>
             <p className="">
               Don't have an account?{" "}
-              <a href="javascript:void(0)" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a href="javascript:void(0)" className="font-medium text-greenTheme hover:text-indigo-500">
                 Sign up
               </a>
             </p>
@@ -20,7 +20,7 @@ export default () => {
             <input
               type="email"
               required
-              className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+              className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-greenTheme shadow-sm rounded-lg"
             />
           </div>
           <div>
@@ -28,14 +28,14 @@ export default () => {
             <input
               type="password"
               required
-              className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+              className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-greenTheme shadow-sm rounded-lg"
             />
           </div>
-          <button className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
+          <button className="w-full px-4 py-2 text-white font-medium bg-greenTheme hover:bg-indigo-500 active:bg-greenTheme rounded-lg duration-150">
             Sign in
           </button>
           <div className="text-center">
-            <a href="javascript:void(0)" className="hover:text-indigo-600">
+            <a href="javascript:void(0)" className="hover:text-greenTheme">
               Forgot password?
             </a>
           </div>
