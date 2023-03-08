@@ -1,14 +1,20 @@
 //Floatui component https://www.floatui.com/
 
 import { useState } from "react";
-import dbAccess from "./dbAccess.js";
+import DBAccess from "../../../utils/dbAccess";
 
 export default () => {
+  const usersDataDB = new DBAccess("Tests");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("506 88 88 88 88");
 
   const saveData = async () => {
-    dbAccess.saveEmail(email, phoneNumber, "stuff");
+    const data = {
+      email: email,
+      phoneNumber: phoneNumber,
+      metaData: "metaData",
+    };
+    usersDataDB.create(data);
   };
 
   return (
