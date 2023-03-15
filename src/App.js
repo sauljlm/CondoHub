@@ -8,6 +8,7 @@ import NewsBanner from "./components/newsBanner.js";
 import Landing from "./pages/landing/landing";
 import Playground from "./pages/playground/playground";
 import Footer from "./components/footer/footer";
+import ReservationForm from "./pages/reservationForm";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,12 @@ const App = () => {
           <Routes>
             <Route exact path="/devTeam" element={<Devteam></Devteam>} />
             <Route exact path="" element={<Landing></Landing>} />
-            <Route exact path="/playground" element={<Playground></Playground>} />
+            <Route exact path="/reservationForm" element={<ReservationForm></ReservationForm>} />
+            <Route
+              exact
+              path="/playground"
+              element={<Playground></Playground>}
+            />
           </Routes>
           <Footer></Footer>
         </QueryClientProvider>
