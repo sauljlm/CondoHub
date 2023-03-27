@@ -9,6 +9,7 @@ import Landing from "./pages/landing/landingPage";
 import Playground from "./pages/playground";
 import Footer from "./components/common/footer";
 import ReservationForm from "./pages/reservationForm";
+import Amenities from "./pages/amenities";
 import Register from "./components/landing/register";
 import Footer from "./components/common/footer";
 import SignIn from "./pages/signIn/signInPage";
@@ -41,6 +42,7 @@ const App = () => {
 
   return (
     <div className="bg-[#fffefa] scroll-smooth">
+
       <appContext.Provider value={navBarRefs}>
         <BrowserRouter>
           <QueryClientProvider client={queryClient}>
@@ -53,6 +55,7 @@ const App = () => {
               <Route exact path="/devTeam" element={<Devteam></Devteam>} />
               <Route exact path="/playground" element={<Playground></Playground>} />
               <Route exact path="/sign-in/*" element={<SignIn></SignIn>} />
+              <Route exact path="/amenities" element={<Amenities></Amenities>} />
               {/* <Route exact path="/login/*" element={<login></login>} /> */}
             </Routes>
             <Footer></Footer>

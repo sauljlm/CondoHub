@@ -7,7 +7,7 @@ class CollectionsReducer {
   //add a new line for each collection on the DB
   constructor() {
     this.collections = new Map();
-    this.collections.set("Amenities", "AmenidadesData");
+    this.collections.set("Amenities", "AmenitiesData");
     this.collections.set("Reservations", "ReservationData");
     this.collections.set("Tests", "testCollection");
     this.collections.set("UsersPrivate", "users_private");
