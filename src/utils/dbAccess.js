@@ -2,18 +2,26 @@ import { addDoc, setDoc, getDocs, getDoc, updateDoc, deleteDoc, doc } from "fire
 import CollectionsReducer from "./collectionsReducer";
 
 class DBAccess {
+  collectionKey;
   collectionsReducer;
   collectionReference;
 
   constructor(collectionKey) {
+    this.collectionKey = collectionKey;
     this.collectionsReducer = new CollectionsReducer();
     this.collectionReference = this.collectionsReducer.getCollectionReference(collectionKey);
   }
 
-  // save a new document in the database
-  create = async (data) => {
-    const DOC_REFERENCE = await addDoc(this.collectionReference, data);
-    return DOC_REFERENCE.id;
+  // save a new document in the database, if it receives a documentID it will create a custom documentID
+  create = async (data, documentID = 0) => {
+    let docReference = this.collectionReference;
+    if (documentID !== 0) {
+      docReference = doc(this.collectionReference, documentID);
+      const RESPONSE = await setDoc(docReference, data);
+      return RESPONSE;
+    }
+    const RESPONSE = await addDoc(docReference, data);
+    return RESPONSE.id;
   };
 
   // get all documents in a collection as an array of js objects (carefull with data usage, don't pull big collections)

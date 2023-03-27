@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Dropdown = ({
-  options = ["No option selected"],
-  optionName = "Seleccionar",
-  setSelectedValue,
-}) => {
+const Dropdown = ({ options = ["No option selected"], optionName = "Seleccionar", setSelectedValue }) => {
   const [selection, setSelection] = useState(options[0]);
 
   useEffect(() => {

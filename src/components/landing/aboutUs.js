@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { appContext } from "../../appContext.js";
 
 const AboutUs = () => {
-  const [state, setState] = useState(false);
-
+  const context = useContext(appContext);
   return (
     <>
-      <section className="mt-24 mx-auto max-w-screen-xl pb-4 px-4 sm:px-8 py-10" id="aboutUs">
+      <section ref={context.aboutUsRef} className="mt-24 mx-auto max-w-screen-xl pb-4 px-4 sm:px-8 py-10" id="aboutUs">
         <div className="text-center space-y-4">
           <h1 className="text-gray-800 font-bold text-4xl md:text-5xl">
             Administración

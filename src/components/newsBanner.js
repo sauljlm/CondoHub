@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NewsBanner = () => {
   //TODO EDU save this into local storage or something for persistence
-  const [visible, setVisible] = useState(true);
-  const removeElement = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const hideNewsBanner = localStorage.getItem("newsBanner");
+    // add logic here to fetch latest version and content
+    hideNewsBanner ? setVisible(false) : setVisible(true);
+  });
+
+  const CLOSE = () => {
+    localStorage.setItem("newsBanner", "hide");
     setVisible((prev) => !prev);
   };
 
   return (
     <div className="bg-white-100">
-      {visible ? (
+      {visible == true ? (
         <div className="max-w-screen-xl mx-auto px-4 py-1 flex items-start justify-between text-white md:px-8">
           <div className="flex gap-x-4">
             <div className="w-6 h-6 flex-none rounded-lg bg-teal-800 flex items-center justify-center self-center">
@@ -35,7 +43,7 @@ const NewsBanner = () => {
             </a> */}
             </p>
           </div>
-          <button className="p-2 rounded-lg duration-150 hover:bg-greenTheme ring-offset-2 " onClick={removeElement}>
+          <button className="p-2 rounded-lg duration-150 hover:bg-greenTheme ring-offset-2 " onClick={CLOSE}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="black" className="w-6 h-6">
               <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
             </svg>

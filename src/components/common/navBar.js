@@ -1,34 +1,56 @@
 //Floatui component https://www.floatui.com/
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { appContext } from "../../appContext.js";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import appLogo from "../../assets/logos/condoHubLogoOnlyTransparentGreenLight.png";
 
 const Navbar = () => {
+  let navigate = useNavigate();
   const [state, setState] = useState(false);
-  const pathname = window.location.pathname;
+  const [pathname, setPathname] = useState(window.location.pathname);
+  const context = useContext(appContext);
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  });
   let navigation = [];
-  if (pathname !== "/devteam") {
+  if (pathname == "/") {
     navigation = [
-      { title: "Inicio", path: "#start" },
-      { title: "Quienes somos", path: "#aboutUs" },
-      { title: "Nuestros clientes", path: "#ourCustomers" },
-      { title: "Funciones", path: "#features" },
-      { title: "Precios", path: "#pricing" },
-      { title: "DevTeam", path: "/devteam" },
-      { title: "Contacto", path: "#contact" },
+      { title: "Inicio", refName: "mainBannerRef" },
+      { title: "Quienes somos", refName: "aboutUsRef" },
+      { title: "Nuestros clientes", refName: "ourCustomersRef" },
+      { title: "Funciones", refName: "featuresRef" },
+      { title: "Precios", refName: "pricingRef" },
+      { title: "Contacto", refName: "registerRef" },
+      { title: "DevTeam", path: "/devTeam" },
     ];
   }
 
+  const handleClick = (context, item) => {
+    if (item.refName) {
+      window.scrollTo({ behavior: "smooth", top: context[item.refName].current.offsetTop - 100 });
+      return;
+    }
+    navigate(item.path);
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  };
+
   return (
     <nav className="bg-stone-900 w-full border-b sticky top-0 z-50 md:border-0 mt:mb-5">
-      <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
+      <div className="items-center px-10 max-w-screen-xl mx-auto md:flex md:px-1">
         <div className="flex items-center justify-between py-2 md:py-5 md:block">
-          <a className="flex" href="/">
+          <button
+            className="flex flex-row items-center justify-between"
+            onClick={() => {
+              handleClick(context, { path: "/" });
+            }}
+          >
             <img src={appLogo} width={50} height={50} alt="CondoHUB UI logo" />
             <div className="font-bold text-white text-lg ml-5 grid place-content-center">
               <span className="self-center">CondoHUB</span>
             </div>
-          </a>
+          </button>
           <div className="md:hidden">
             <button
               className="text-gray-100 outline-none bg-lightGreenTheme p-2 rounded-md focus:border-grey-500 focus:border"
@@ -61,19 +83,32 @@ const Navbar = () => {
             {navigation.map((item, idx) => {
               return (
                 <li key={idx} className="text-white font-bold  hover:text-lightGreenTheme">
-                  <a href={item.path}>{item.title}</a>
+                  <button
+                    onClick={() => {
+                      handleClick(context, item);
+                    }}
+                  >
+                    {item.path ? <Link to={item.path}></Link> : null}
+                    {item.title}
+                  </button>
                 </li>
               );
             })}
           </ul>
         </div>
-        {pathname !== "/devteam" && (
+        {pathname === "/" && (
           <div className="hidden md:inline-block">
             <a
-              href="#newsletter"
-              className="py-3 px-4 text-black bg-lightGreenTheme hover:bg-greenTheme rounded-md shadow"
+              href="#login"
+              className="py-3 px-4 mr-5 w-20 text-white border-lightGreenTheme border-2 hover:bg-greenTheme hover:border-greenTheme hover:text-black rounded-md shadow"
             >
               Login
+            </a>
+            <a
+              href="sign-in"
+              className="py-3 px-4 w-20 text-black border-lightGreenTheme border-2 bg-lightGreenTheme hover:bg-greenTheme hover:border-greenTheme rounded-md shadow"
+            >
+              Registrarse
             </a>
           </div>
         )}

@@ -1,10 +1,14 @@
-import mainBackground from "../../../assets/mainBaner1.jpg";
-import appLogo from "../../../assets/logos/condoHubLogoOnlyTransparentGreenLight.png";
+import { useContext } from "react";
+import { appContext } from "../../appContext.js";
+import mainBackground from "../../assets/mainBaner1.jpg";
+import appLogo from "../../assets/logos/condoHubLogoOnlyTransparentGreenLight.png";
 
 const MainBanner = () => {
+  const context = useContext(appContext);
   return (
-    <div
-      class="sm:pl-80 sm:pr-40 h-[500px] w-full p-10 flex bg-[center_top_-15rem]"
+    <section
+      ref={context.mainBannerRef}
+      className="sm:pl-80 sm:pr-40 h-[500px] w-full p-10 flex bg-[center_top_-15rem]"
       style={{ backgroundImage: `url(${mainBackground})` }}
     >
       <div className="font-bold text-white w-full" id="start">
@@ -23,7 +27,7 @@ const MainBanner = () => {
           <div className="text-5xl drop-shadow-2xl sm:text-left">CondoHUB</div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

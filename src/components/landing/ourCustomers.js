@@ -1,6 +1,11 @@
+import { useContext } from "react";
+import { appContext } from "../../appContext.js";
+
 const OurCustomers = () => {
+  const context = useContext(appContext);
+
   return (
-    <section className="py-14" id="ourCustomers">
+    <section ref={context.ourCustomersRef} className="py-14" id="ourCustomers">
       <div className="max-w-screen-xl mx-auto px-4 md:px-8">
         <div className="max-w-3xl mx-auto flex">
           <figure className="p-10">

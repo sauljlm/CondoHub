@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DBAccess from "../../utils/dbAccess";
+import DBAccess from "../utils/dbAccess";
 
 // This component is a proff of concept for the dbAccess component to demostrate its usage
 function FirestoreTest() {
@@ -34,7 +34,6 @@ function FirestoreTest() {
   const testGetOneById = async () => {
     setIsLoading(true);
     const doc = await testDataDB.getOneById(docId);
-    console.log(doc);
     setResults([doc]);
     setIsLoading(false);
   };

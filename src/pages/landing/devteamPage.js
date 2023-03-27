@@ -1,7 +1,7 @@
 import devEduardoPhoto from "../../assets/devEduardoRomaguera.png";
 import devTatianaPhoto from "../../assets/devTatianaAraya.png";
 import devSaulPhoto from "../../assets/devSaulLopez.png";
-import Dev from "./Dev.js";
+import Dev from "../../components/landing/dev.js";
 
 const Devteam = () => {
   const devEduardo = {

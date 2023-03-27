@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { appContext } from "../../appContext.js";
+
 const Features = () => {
+  const context = useContext(appContext);
   const features = [
     {
       icon: (
@@ -123,7 +127,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-14" id="features">
+    <section ref={context.featuresRef} className="py-14" id="features">
       <div className="max-w-screen-xl mx-auto px-4 text-center text-gray-600 md:px-8">
         <div className="max-w-2xl mx-auto">
           <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl">Algunas de nuestras funcionalidades</h3>
