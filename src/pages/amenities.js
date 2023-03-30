@@ -10,13 +10,20 @@ const Amenities = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [items, setItems] = useState([]);
-    const [timeBlocks, setTimeBlocks] = useState([]);
-    const [timeBlockComponents, setTimeBlockComponents] = useState([]);
+    const [timeBlocks, setTimeBlocks] = useState([{
+        id : 1,
+        startTime : "",
+        endTime : ""
+    }]);
 
     useEffect(async () => {
         loadData();
     }, [])
-    
+
+    useEffect(() => {
+        console.log(timeBlocks);
+    }, [timeBlocks]);
+
     const loadData = async () => {
         const docs = await dataDB.getAll();
         await setItems(docs);
@@ -27,10 +34,22 @@ const Amenities = () => {
             name: name,
             description: description,
             price: price,
+            timeBlocks: timeBlocks,
             metaData: "stuff",
         });
         loadData();
     };
+
+    const newTimeBlock = () => {
+        timeBlockData = {
+            id : timeBlocks.length+1,
+            startTime : "",
+            endTime : ""
+        }
+
+        setTimeBlocks([...timeBlocks, timeBlockData]);
+        console.log(timeBlocks)
+    }
 
     return (
         <div className="max-w-md mx-auto mt-10">
@@ -69,6 +88,25 @@ const Amenities = () => {
                             setPrice(event.target.value);
                         }}
                     />
+                </div>
+                <div class="flex justify-between">
+                    <h3 className="text-1xl font-bold mb-5">Horarios</h3>
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="button"
+                        onClick={newTimeBlock}
+                    >
+                        Agregar nuevo
+                    </button>
+                </div>
+                <div className="mb-4">
+                    {timeBlocks.map((result) => (
+                        <TimeBlock
+                            id = {result.id}
+                            setTimeBlocks = {setTimeBlocks}
+                            timeBlocks = {timeBlocks}
+                        />
+                    ))}
                 </div>
                 <div className="flex justify-center m-8">
                     <button 

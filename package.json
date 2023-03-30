@@ -29,6 +29,7 @@
     "latest": "^0.2.0",
     "node": "^18.9.1",
     "react": "^18.2.0",
+    "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-query": "^3.39.3",
