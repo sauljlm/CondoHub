@@ -15,7 +15,7 @@ const MainBanner = () => {
         <div className="text-6xl drop-shadow-2xl sm:text-left">Conecta tu</div>
         <div className="text-6xl drop-shadow-2xl sm:text-left">Condominio</div>
       </div>
-      <div className="bg-black w-auto h-min flex justify-center items-center p-10">
+      <div className="bg-black w-auto h-100 flex justify-center items-center px-10">
         <div className="font-bold text-white p-10 flex justify-center items-center">
           <img
             className="flex justify-center items-center"

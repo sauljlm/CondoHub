@@ -1,43 +1,26 @@
 //Floatui component https://www.floatui.com/
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import studioLogo from "../../assets/logos/condoHubLogoOnlyTransparent.png";
 import { FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
+  const [pathname, setPathname] = useState(window.location.pathname);
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  });
   let navigate = useNavigate();
   const handleClick = (path) => {
     navigate(path);
     window.scrollTo({ behavior: "smooth", top: 0 });
   };
-  const footerNavs = [
-    // {
-    //   href: "javascript:void()",
-    //   name: "Acerca de",
-    // },
-    // {
-    //   href: "javascript:void()",
-    //   name: "Equipo",
-    // },
-    // {
-    //   href: "javascript:void()",
-    //   name: "Contacto",
-    // },
-    // {
-    //   href: "javascript:void()",
-    //   name: "Team",
-    // },
-    // {
-    //   href: "javascript:void()",
-    //   name: "Careers",
-    // },
-    // {
-    //   href: "javascript:void()",
-    //   name: "Suport",
-    // },
-  ];
 
   return (
-    <footer className="text-gray-500 bg-stone-200 px-4 py-2 max-w-screen mx-auto mt-4">
+    <footer
+      className={`text-gray-500 bg-stone-200 px-4 py-2 max-w-screen mx-auto mt-4" ${
+        pathname.includes("app") ? "hidden" : "block"
+      }`}
+    >
       <div className="max-w-lg mx-auto text-center">
         <button
           onClick={() => {

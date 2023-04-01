@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FaFacebook } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
-import { myAuth, myFacebookAuthProvider } from "../../firebaseConfig.js";
+import { myAuth, myGoogleAuthProvider } from "../../firebaseConfig.js";
 import DBAccess from "../../utils/dbAccess";
 
-function FacebookSignIn({ userData, onClick }) {
+function GoogleLogin() {
+  let navigate = useNavigate();
   const usersDB = new DBAccess("UsersPrivate");
 
   const saveUserData = async (data) => {
@@ -22,14 +24,9 @@ function FacebookSignIn({ userData, onClick }) {
   };
 
   const handleClick = () => {
-    if (!onClick()) {
-      return;
-    }
-    signInWithPopup(myAuth, myFacebookAuthProvider).then((data) => {
-      saveUserData(data.user);
-      localStorage.setItem("email", data.user.email);
-      localStorage.setItem("userName", data.user.displayName.toString());
-      localStorage.setItem("uid", data.user.uid);
+    signInWithPopup(myAuth, myGoogleAuthProvider).then((data) => {
+      console.log(data.user);
+      navigate("/app");
     });
   };
 
@@ -37,16 +34,16 @@ function FacebookSignIn({ userData, onClick }) {
     <div>
       <button
         type="submit"
-        className="flex items-center justify-center px-3 py-3 rounded-lg w-60 font-semibold text-sm duration-150 text-white bg-blue-900 hover:bg-red-700 active:bg-red-800"
+        className="flex items-center justify-start py-3 rounded-lg w-80 font-semibold text-sm duration-150 text-black bg-neutral-200 hover:bg-red-400 hover:text-white active:bg-red-800 mb-7"
         onClick={() => {
           handleClick();
         }}
       >
-        <FaFacebook className="mr-2" />
-        Registrarse con Facebook
+        <FcGoogle className="mx-8 text-lg"></FcGoogle>
+        Iniciar sesión con Google
       </button>
     </div>
   );
 }
 
-export default FacebookSignIn;
+export default GoogleLogin;

@@ -1,30 +1,76 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GoogleSignIn from "../../components/signIn/googleSignIn";
+import EmailSignIn from "../../components/signIn/emailSignIn";
 import Dropdown from "../../components/common/inputs/dropdown";
 import TextInput from "../../components/common/inputs/textInput";
 
 const SignInEmail = () => {
   let navigate = useNavigate();
   const CONDOMINIUM_OPTIONS = ["Solarium", "La Colina", "Obelisco"];
+  const [validationTrigger, setValidationTrigger] = useState(0);
   const [name, setName] = useState("");
   const [id, setID] = useState("");
   const [condoNumber, setCondoNumber] = useState("");
   const [condoName, setCondoName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const userData = () => {
     const data = {
       name: name,
       id: id,
       condoNumber: condoNumber,
       condoName: condoName,
+      email: email,
+      password: password,
     };
     return data;
   };
 
-  function handleBackButon() {
+  const handleBackButon = () => {
     navigate("/sign-in/");
-  }
+  };
+
+  const validateName = (name) => {
+    const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,50}$/;
+    let valid = regex.test(name);
+    name === "" ? (valid = false) : null;
+    return valid;
+  };
+
+  const validateID = (id) => {
+    const regex = /^[a-zA-Z0-9]{6,20}$/;
+    const valid = regex.test(id);
+    return valid;
+  };
+
+  const validateCondoNumber = (condoNumber) => {
+    const regex = /^[a-zA-Z0-9]{1,20}$/;
+    const valid = regex.test(condoNumber);
+    return valid;
+  };
+
+  const validateEmail = (email) => {
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const valid = regex.test(email);
+    return valid;
+  };
+
+  const validatePassword = (password) => {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+    const valid = regex.test(password);
+    return valid;
+  };
+
+  const validateForm = () => {
+    const valid =
+      validateName(name) &&
+      validateID(id) &&
+      validateCondoNumber(condoNumber) &&
+      validateEmail(email) &&
+      validatePassword(password);
+    setValidationTrigger(validationTrigger + 1);
+    return valid;
+  };
 
   return (
     <form
@@ -36,19 +82,43 @@ const SignInEmail = () => {
       </h1>
       <div className="max-w-md mx-auto">
         <div className="mb-4">
-          <TextInput labelText="Nombre" type="text" id="name" name="name" placeholder="Nombre" />
+          <TextInput
+            labelText="Nombre"
+            errorText="Introduzca un nombre válido"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Nombre"
+            setValue={setName}
+            validationTrigger={validationTrigger}
+            validationFunction={validateName}
+          />
         </div>
         <div className="mb-4">
-          <TextInput labelText="ID / Cédula" type="text" id="id" name="id" placeholder="ID / Cédula" />
+          <TextInput
+            labelText="ID / Cédula"
+            errorText="Introduzca una identificación válida"
+            type="text"
+            id="id"
+            name="id"
+            placeholder="ID / Cédula"
+            setValue={setID}
+            validationTrigger={validationTrigger}
+            validationFunction={validateID}
+          />
         </div>
 
         <div className="mb-4">
           <TextInput
             labelText="Número de condominio"
+            errorText="Introduzca un número de condominio válido"
             type="text"
             id="houseNumber"
             name="houseNumber"
             placeholder="Número de condominio"
+            setValue={setCondoNumber}
+            validationTrigger={validationTrigger}
+            validationFunction={validateCondoNumber}
           />
         </div>
 
@@ -60,28 +130,30 @@ const SignInEmail = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="email" className="block mb-2 text-gray-500">
-            Email
-          </label>
-          <input
+          <TextInput
+            labelText="Email"
+            errorText="Introduzca un correo electrónico válido (ej: juan.perez@ejemplo.com)"
             type="email"
             id="email"
             name="email"
-            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
             placeholder="Email"
+            setValue={setEmail}
+            validationTrigger={validationTrigger}
+            validationFunction={validateEmail}
           />
         </div>
 
         <div className="mb-6">
-          <label htmlFor="password" className="block mb-2 text-gray-500">
-            Password
-          </label>
-          <input
+          <TextInput
+            labelText="Contraseña"
+            errorText="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial"
             type="password"
             id="password"
             name="password"
-            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
             placeholder="Contraseña"
+            setValue={setPassword}
+            validationTrigger={validationTrigger}
+            validationFunction={validatePassword}
           />
         </div>
 
@@ -93,7 +165,7 @@ const SignInEmail = () => {
           >
             Regresar
           </button>
-          <GoogleSignIn userData={userData()} className="m-10"></GoogleSignIn>
+          <EmailSignIn userData={userData()} onClick={validateForm} className="m-10"></EmailSignIn>
         </div>
       </div>
     </form>

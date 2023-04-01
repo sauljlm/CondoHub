@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { signInWithPopup } from "firebase/auth";
-import { auth, myGoogleAuthProvider } from "../../firebaseConfig.js";
+import { myAuth, myGoogleAuthProvider } from "../../firebaseConfig.js";
 import DBAccess from "../../utils/dbAccess";
 
 function GoogleSignIn({ userData, onClick }) {
@@ -18,27 +18,20 @@ function GoogleSignIn({ userData, onClick }) {
       condoNumber: userData.condoNumber,
       condoName: userData.condoName,
     };
-    await usersDB.create(DATA_TO_SAVE, UID);
+    await usersDB.create(DATA_TO_SAVE, data.uid);
   };
 
   const handleClick = () => {
     if (!onClick()) {
       return;
     }
-    signInWithPopup(auth, myGoogleAuthProvider).then((data) => {
+    signInWithPopup(myAuth, myGoogleAuthProvider).then((data) => {
       saveUserData(data.user);
       localStorage.setItem("email", data.user.email);
       localStorage.setItem("userName", data.user.displayName.toString());
       localStorage.setItem("uid", data.user.uid);
     });
   };
-
-  //lOG OUT code
-  // firebase.auth().signOut().then(function() {
-  //   // Sign-out successful.
-  // }).catch(function(error) {
-  //   // An error happened.
-  // });
 
   return (
     <div>

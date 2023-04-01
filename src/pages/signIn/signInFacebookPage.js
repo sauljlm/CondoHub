@@ -27,7 +27,7 @@ const SignInGoogle = () => {
   };
 
   const validateName = (name) => {
-    const regex = /^[a-zA-Z0-9]{2,40}$/;
+    const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,50}$/;
     let valid = regex.test(name);
     name === "" ? (valid = false) : null;
     return valid;
@@ -63,6 +63,7 @@ const SignInGoogle = () => {
         <div className="mb-4">
           <TextInput
             labelText="Nombre"
+            errorText="Introduzca un nombre válido"
             type="text"
             id="name"
             name="name"
@@ -75,6 +76,7 @@ const SignInGoogle = () => {
         <div className="mb-4">
           <TextInput
             labelText="ID / Cédula"
+            errorText="Introduzca una identificación válida"
             type="text"
             id="id"
             name="id"
@@ -88,6 +90,7 @@ const SignInGoogle = () => {
         <div className="mb-4">
           <TextInput
             labelText="Número de condominio"
+            errorText="Introduzca un número de condominio válido"
             type="text"
             id="houseNumber"
             name="houseNumber"

@@ -1,7 +1,7 @@
 //Floatui component https://www.floatui.com/
 import { useState, useEffect } from "react";
 import { useContext } from "react";
-import { appContext } from "../../appContext.js";
+import { appContext, loginContext } from "../../appContext.js";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import appLogo from "../../assets/logos/condoHubLogoOnlyTransparentGreenLight.png";
@@ -11,10 +11,27 @@ const Navbar = () => {
   const [state, setState] = useState(false);
   const [pathname, setPathname] = useState(window.location.pathname);
   const context = useContext(appContext);
+  const userContext = useContext(loginContext);
+  console.log(userContext);
   useEffect(() => {
     setPathname(window.location.pathname);
   });
+  useEffect(() => {
+    if (userContext !== null && !window.location.pathname.includes("app")) {
+      navigate("/app");
+      localStorage.setItem("email", userContext.email);
+      userContext.displayName ? localStorage.setItem("userName", userContext.displayName.toString()) : null;
+      localStorage.setItem("uid", userContext.uid);
+      return;
+    }
+    if (userContext === null && window.location.pathname.includes("app")) {
+      navigate("/");
+      return;
+    }
+  });
+
   let navigation = [];
+
   if (pathname == "/") {
     navigation = [
       { title: "Inicio", refName: "mainBannerRef" },
@@ -28,6 +45,10 @@ const Navbar = () => {
   }
 
   const handleClick = (context, item) => {
+    if (userContext !== null && window.location.pathname.includes("app")) {
+      navigate("/app");
+      return;
+    }
     if (item.refName) {
       window.scrollTo({ behavior: "smooth", top: context[item.refName].current.offsetTop - 100 });
       return;
@@ -38,7 +59,11 @@ const Navbar = () => {
 
   return (
     <nav className="bg-stone-900 w-full border-b sticky top-0 z-50 md:border-0 mt:mb-5">
-      <div className="items-center px-10 max-w-screen-xl mx-auto md:flex md:px-1">
+      <div
+        className={`items-center px-10  mx-8 md:flex md:px-1 ${
+          pathname.includes("app") ? "max-w-full ml-6 h-20" : "mx - 1"
+        }`}
+      >
         <div className="flex items-center justify-between py-2 md:py-5 md:block">
           <button
             className="flex flex-row items-center justify-between"
@@ -98,17 +123,31 @@ const Navbar = () => {
         </div>
         {pathname === "/" && (
           <div className="hidden md:inline-block">
-            <a
-              href="#login"
-              className="py-3 px-4 mr-5 w-20 text-white border-lightGreenTheme border-2 hover:bg-greenTheme hover:border-greenTheme hover:text-black rounded-md shadow"
+            <button
+              onClick={() => {
+                handleClick(context, { path: "/login" });
+              }}
+              className="py-3 px-4 mr-5 w-auto text-white border-lightGreenTheme border-2 hover:bg-greenTheme hover:border-greenTheme hover:text-black rounded-md shadow"
             >
               Login
-            </a>
-            <a
-              href="sign-in"
-              className="py-3 px-4 w-20 text-black border-lightGreenTheme border-2 bg-lightGreenTheme hover:bg-greenTheme hover:border-greenTheme rounded-md shadow"
+            </button>
+            <button
+              onClick={() => {
+                handleClick(context, { path: "/sign-in" });
+              }}
+              className="py-3 px-4 w-auto text-black border-lightGreenTheme border-2 bg-lightGreenTheme hover:bg-greenTheme hover:border-greenTheme rounded-md shadow"
             >
               Registrarse
+            </button>
+          </div>
+        )}
+        {pathname.includes("app") && userContext !== null && (
+          <div className="flex items-center px-10 max-w  mx-auto md:flex md:px-1 max-w-full ml-6 h-20">
+            <a
+              href="#login"
+              className="py-3 px-4 mr-5 w-auto text-white border-lightGreenTheme border-2 hover:bg-greenTheme hover:border-greenTheme hover:text-black rounded-md shadow"
+            >
+              {userContext.email}
             </a>
           </div>
         )}

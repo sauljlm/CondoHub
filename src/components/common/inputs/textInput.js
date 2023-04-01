@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 
 const TextInput = ({
   labelText,
+  errorText,
   type,
   id,
   name = "name",
@@ -47,6 +48,7 @@ const TextInput = ({
         onFocus={(event) => handleOnChange(event)}
         onChange={(event) => handleOnChange(event)}
       />
+      <div>{error && errorText ? <div className="block mb-[-1rem] text-red-800 text-xs">{errorText}</div> : " "}</div>
     </div>
   );
 };

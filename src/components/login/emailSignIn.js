@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { FaFacebook } from "react-icons/fa";
-import { signInWithPopup } from "firebase/auth";
-import { myAuth, myFacebookAuthProvider } from "../../firebaseConfig.js";
+import { MdOutlineMail } from "react-icons/md";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { myAuth } from "../../firebaseConfig.js";
 import DBAccess from "../../utils/dbAccess";
 
-function FacebookSignIn({ userData, onClick }) {
+function EmailSignIn({ userData, onClick }) {
   const usersDB = new DBAccess("UsersPrivate");
 
   const saveUserData = async (data) => {
     const DATA_TO_SAVE = {
       userId: data.uid,
-      displayName: data.displayName,
+      displayName: userData.name,
       email: data.email,
-      phoneNumber: data.phoneNumber,
       name: userData.name,
       id: userData.id,
       condoNumber: userData.condoNumber,
@@ -25,10 +24,12 @@ function FacebookSignIn({ userData, onClick }) {
     if (!onClick()) {
       return;
     }
-    signInWithPopup(myAuth, myFacebookAuthProvider).then((data) => {
+    createUserWithEmailAndPassword(myAuth, userData.email, userData.password).then((data) => {
+      console.log("data");
+      console.log(data);
       saveUserData(data.user);
       localStorage.setItem("email", data.user.email);
-      localStorage.setItem("userName", data.user.displayName.toString());
+      localStorage.setItem("userName", userData.name.toString());
       localStorage.setItem("uid", data.user.uid);
     });
   };
@@ -42,11 +43,11 @@ function FacebookSignIn({ userData, onClick }) {
           handleClick();
         }}
       >
-        <FaFacebook className="mr-2" />
-        Registrarse con Facebook
+        <MdOutlineMail className="mr-2" />
+        Registrarse con Email
       </button>
     </div>
   );
 }
 
-export default FacebookSignIn;
+export default EmailSignIn;

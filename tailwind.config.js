@@ -10,6 +10,7 @@ module.exports = {
         lightGreenTheme: "#99f6e4",
         indigoTheme: "#3730a3",
         blueTheme: "#7dd3fc",
+        darkBlueTheme: "#01171c",
         grayTheme: "#71717a",
       },
     },
