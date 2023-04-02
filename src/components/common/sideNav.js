@@ -7,7 +7,6 @@ import { loginContext } from "../../appContext.js";
 const SideNav = () => {
   const userContext = useContext(loginContext);
   let navigate = useNavigate();
-  console.log(userContext);
   const handleClick = (path) => {
     navigate(path);
     window.scrollTo({ behavior: "smooth", top: 0 });

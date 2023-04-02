@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { appContext } from "../../appContext.js";
+import { appContext, toastContext } from "../../appContext.js";
 
 const Pricing = () => {
   const context = useContext(appContext);
+  const toast = useContext(toastContext);
   const plans = [
     {
       name: "GRATIS",
@@ -26,6 +27,15 @@ const Pricing = () => {
       ],
     },
   ];
+
+  const handleClick = () => {
+    toast.set({
+      message:
+        "¡Gracias por tu interés! CondoHub aun está en construcción. Regístrate para recibir más información y actualizaciones.",
+      type: "success",
+      timeOut: 5500,
+    });
+  };
 
   return (
     <section ref={context.pricingRef} className="py-14" id="pricing">
@@ -65,7 +75,12 @@ const Pricing = () => {
                 ))}
               </ul>
               <div className="flex-1 flex items-end">
-                <button className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-greenTheme hover:bg-indigo-500 active:bg-indigo-700">
+                <button
+                  className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-greenTheme hover:bg-indigo-500 active:bg-indigo-700"
+                  onClick={() => {
+                    handleClick();
+                  }}
+                >
                   Lo quiero
                 </button>
               </div>

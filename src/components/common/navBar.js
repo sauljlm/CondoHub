@@ -12,7 +12,6 @@ const Navbar = () => {
   const [pathname, setPathname] = useState(window.location.pathname);
   const context = useContext(appContext);
   const userContext = useContext(loginContext);
-  console.log(userContext);
   useEffect(() => {
     setPathname(window.location.pathname);
   });

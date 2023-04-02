@@ -15,13 +15,19 @@ import Footer from "./components/common/footer";
 import SignIn from "./pages/signIn/signInPage";
 import Login from "./pages/loginPage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { appContext, loginContext } from "./appContext";
+import { appContext, loginContext, toastContext } from "./appContext";
 import DBAccess from "./utils/dbAccess";
+import ToastNotification from "./components/common/toastNotification";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const usersDB = new DBAccess("UsersPrivate");
+  const [toastData, setToastData] = useState({
+    message: "CondoHub",
+    type: "success",
+    timeOut: 3000,
+  });
   const [loginData, setLoginData] = useState({
     login: null,
   });
@@ -48,6 +54,11 @@ const App = () => {
     });
   };
 
+  const state = {
+    data: toastData,
+    set: setToastData,
+  };
+
   const auth = getAuth();
   useEffect(() => {
     getUserData();
@@ -57,20 +68,23 @@ const App = () => {
     <div className="bg-[#fffefa] scroll-smooth">
       <appContext.Provider value={navBarData}>
         <loginContext.Provider value={loginData}>
-          <BrowserRouter>
-            <QueryClientProvider client={queryClient}>
-              <NewsBanner></NewsBanner>
-              <Navbar></Navbar>
-              <Routes>
-                <Route exact path="" element={<Landing></Landing>} />
-                <Route exact path="/devTeam" element={<Devteam></Devteam>} />
-                <Route exact path="/sign-in/*" element={<SignIn></SignIn>} />
-                <Route exact path="/login/*" element={<Login></Login>} />
-                <Route exact path="/app/*" element={<AppPage></AppPage>} />
-              </Routes>
-              <Footer></Footer>
-            </QueryClientProvider>
-          </BrowserRouter>
+          <toastContext.Provider value={state}>
+            <BrowserRouter>
+              <QueryClientProvider client={queryClient}>
+                <NewsBanner></NewsBanner>
+                <Navbar></Navbar>
+                <Routes>
+                  <Route exact path="" element={<Landing></Landing>} />
+                  <Route exact path="/devTeam" element={<Devteam></Devteam>} />
+                  <Route exact path="/sign-in/*" element={<SignIn></SignIn>} />
+                  <Route exact path="/login/*" element={<Login></Login>} />
+                  <Route exact path="/app/*" element={<AppPage></AppPage>} />
+                </Routes>
+                <ToastNotification></ToastNotification>
+                <Footer></Footer>
+              </QueryClientProvider>
+            </BrowserRouter>
+          </toastContext.Provider>
         </loginContext.Provider>
       </appContext.Provider>
     </div>

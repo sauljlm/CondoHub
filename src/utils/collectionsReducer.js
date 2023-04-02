@@ -11,6 +11,7 @@ class CollectionsReducer {
     this.collections.set("Reservations", "ReservationData");
     this.collections.set("Tests", "testCollection");
     this.collections.set("UsersPrivate", "users_private");
+    this.collections.set("potentialCustomers", "potential_customers");
   }
 
   //Return the collection reference by name on the DB for the requested key

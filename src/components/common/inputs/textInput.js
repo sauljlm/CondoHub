@@ -31,12 +31,18 @@ const TextInput = ({
   const handleOnChange = (event) => {
     setInternalValue(event.target.value);
     setValue(event.target.value);
+  };
+
+  const handleOnBlur = (event) => {
+    setInternalValue(event.target.value);
+    setValue(event.target.value);
     setError(!validationFunction(event.target.value));
   };
 
   return (
     <div>
-      <label className="block mb-2 text-gray-500">{labelText}</label>
+      {labelText ? <label className="block mb-2 text-gray-500">{labelText}</label> : " "}
+      {/* <label className="block mb-2 text-gray-500">{labelText}</label> */}
       <input
         type={type}
         id={id}
@@ -45,7 +51,7 @@ const TextInput = ({
           error ? "border-red-500 border-2" : "border-gray-400"
         }`}
         placeholder={placeholder}
-        onFocus={(event) => handleOnChange(event)}
+        onBlur={(event) => handleOnBlur(event)}
         onChange={(event) => handleOnChange(event)}
       />
       <div>{error && errorText ? <div className="block mb-[-1rem] text-red-800 text-xs">{errorText}</div> : " "}</div>

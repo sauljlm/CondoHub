@@ -1,15 +1,18 @@
 //Floatui component https://www.floatui.com/
-
 import { useState } from "react";
 import DBAccess from "../../utils/dbAccess";
 import { useContext } from "react";
-import { appContext } from "../../appContext.js";
+import { appContext, toastContext } from "../../appContext.js";
+import TextInput from "../../components/common/inputs/textInput";
 
 export default () => {
   const context = useContext(appContext);
-  const usersDataDB = new DBAccess("Tests");
+  const toast = useContext(toastContext);
+  const usersDataDB = new DBAccess("potentialCustomers");
   const [email, setEmail] = useState("");
+  const [validationTrigger, setValidationTrigger] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState("506 88 88 88 88");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const saveData = async () => {
     const data = {
@@ -18,6 +21,25 @@ export default () => {
       metaData: "metaData",
     };
     usersDataDB.create(data);
+  };
+
+  const validateEmail = (data) => {
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const valid = regex.test(data);
+    return valid;
+  };
+
+  const handleClick = () => {
+    setValidationTrigger(validationTrigger + 1);
+    if (validateEmail(email)) {
+      saveData();
+      setIsButtonDisabled(true);
+      toast.set({
+        message: "Gracias por registrarte, te contactaremos pronto.",
+        type: "success",
+        timeOut: 3000,
+      });
+    }
   };
 
   return (
@@ -47,24 +69,41 @@ export default () => {
       </div>
       <div className="mt-5">
         <form onSubmit={(e) => e.preventDefault()} className="items-center justify-center sm:flex">
-          <input
+          {/* <input
             type="email"
             placeholder="Correo electrónico"
             className="text-gray-500 w-full p-3 rounded-md border outline-none focus:border-greenTheme"
             onChange={(event) => {
               setEmail(event.target.value);
             }}
-          />
+          /> */}
+          <div className="w-3/4 h-100">
+            <TextInput
+              labelText=""
+              errorText="Introduzca correo electrónico válido"
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Correo electrónico"
+              setValue={setEmail}
+              validationTrigger={validationTrigger}
+              validationFunction={validateEmail}
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+            />
+          </div>
 
           <button
-            className="w-full mt-3 px-5 py-3 rounded-md text-white bg-greenTheme outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-greenTheme sm:mt-0 sm:ml-3 sm:w-auto hover:bg-indigo-500"
-            // type="submit"
-            onClick={saveData}
+            className={`w-full mt-3 px-5 py-2 rounded-md text-white bg-greenTheme outline-none shadow-md focus:shadow-none focus:ring-2 ring-offset-2 ring-greenTheme sm:mt-0 sm:ml-3 sm:w-auto hover:bg-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed`}
+            type="submit"
+            onClick={handleClick}
+            disabled={isButtonDisabled}
           >
             Enviar
           </button>
         </form>
-        <p className="mt-3 mx-auto text-center max-w-xl text-[15px] text-gray-400">
+        <p className="mt-8 mx-auto text-center max-w-xl text-[15px] text-gray-400">
           No al spam, nos preocupamos por la protección de tus datos.
           {/* TODO Write a privacy policy and link it here
           Lee nuestra{" "}
