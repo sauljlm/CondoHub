@@ -24,8 +24,11 @@ function ReservationForm() {
   const [reservationDate, setReservationDate] = useState(getToday());
   const [reservationTime, setReservationTime] = useState("");
   const [amenityOptions, setAmenityOptions] = useState([]);
-  const [timeBlockOptions, setTimeBlockOptions] = useState([]);
+  const [availableTimeBlockOptions, setAvailableTimeBlockOptions] = useState(
+    []
+  );
   const [allUserReservations, setAllUserReservations] = useState([]);
+  const [allReservations, setAllReservations] = useState([]);
   const [amenitiesMap, setAmenitiesMap] = useState(new Map());
 
   const retrieveAllAmenities = async () => {
@@ -44,9 +47,39 @@ function ReservationForm() {
       operator: "==",
       part2: userContext.uid,
     };
-
     const allUserReservations = await reservationDB.getAllWhere(filter);
     setAllUserReservations(allUserReservations);
+  };
+
+  const availableAmenityTimeblocks = async () => {
+    const selectedAmenity = await amenitiesDB.getOneById(
+      amenitiesMap.get(amenityNameSelected)
+    );
+    const amenityTimeBlocks = selectedAmenity.timeBlocks;
+    const timeBlocksArray = amenityTimeBlocks.map(
+      (item) => `${item.startTime} - ${item.endTime}`
+    );
+
+    const filter = {
+      part1: "reservationDate",
+      operator: "==",
+      part2: reservationDate,
+    };
+    const allDateReservations = await reservationDB.getAllWhere(filter);
+    const filteredData = allDateReservations.filter(
+      (item) => item.amenitySelected === amenityNameSelected
+    );
+    const timeArray = filteredData.map((item) => item.reservationTime);
+    const uniqueValues = timeBlocksArray.filter(
+      (value) => !timeArray.includes(value)
+    );
+    setAvailableTimeBlockOptions(uniqueValues);
+
+    console.log(amenityNameSelected);
+    console.log("allDateReservations");
+    console.log(allDateReservations);
+    console.log("uniqueValues");
+    console.log(uniqueValues);
   };
 
   useEffect(() => {
@@ -55,27 +88,9 @@ function ReservationForm() {
     retrieveAllUserReservations();
   }, []);
 
-  const retrieveAmenityTimeblock = async () => {
-    const selectedAmenity = await amenitiesDB.getOneById(
-      amenitiesMap.get(amenityNameSelected)
-    );
-    console.log(selectedAmenity);
-    const amenityTimeBlocks = selectedAmenity.timeBlocks;
-
-    const timeBlocksArray = amenityTimeBlocks.map(
-      (item) => `${item.startTime} - ${item.endTime}`
-    );
-
-    console.log("amenityTimeBlocks");
-    console.log(amenityTimeBlocks);
-    console.log(timeBlocksArray);
-
-    setTimeBlockOptions(timeBlocksArray);
-  };
-
   useEffect(() => {
-    retrieveAmenityTimeblock();
-  }, [amenityNameSelected]);
+    availableAmenityTimeblocks();
+  }, [amenityNameSelected, reservationDate]);
 
   const createReservation = async () => {
     await reservationDB.create({
@@ -122,11 +137,6 @@ function ReservationForm() {
               }}
             />
           </div>
-          <div className="flex justify-center">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-8">
-              Cargar horarios
-            </button>
-          </div>
           <div className="mb-4">
             <label
               htmlFor="reservationTime"
@@ -135,7 +145,7 @@ function ReservationForm() {
               Seleccione horario disponible
             </label>
             <Dropdown
-              options={timeBlockOptions}
+              options={availableTimeBlockOptions}
               setSelectedValue={setReservationTime}
             ></Dropdown>
           </div>
