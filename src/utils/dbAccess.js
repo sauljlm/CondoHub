@@ -1,4 +1,14 @@
-import { addDoc, setDoc, getDocs, getDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import {
+  addDoc,
+  setDoc,
+  getDocs,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import CollectionsReducer from "./collectionsReducer";
 
 class DBAccess {
@@ -9,7 +19,8 @@ class DBAccess {
   constructor(collectionKey) {
     this.collectionKey = collectionKey;
     this.collectionsReducer = new CollectionsReducer();
-    this.collectionReference = this.collectionsReducer.getCollectionReference(collectionKey);
+    this.collectionReference =
+      this.collectionsReducer.getCollectionReference(collectionKey);
   }
 
   // save a new document in the database, if it receives a documentID it will create a custom documentID
@@ -27,6 +38,21 @@ class DBAccess {
   // get all documents in a collection as an array of js objects (carefull with data usage, don't pull big collections)
   getAll = async () => {
     const QUERY_SNAPSHOT = await getDocs(this.collectionReference);
+    const DOCS = [];
+    QUERY_SNAPSHOT.forEach((doc) => {
+      DOCS.push({ id: doc.id, ...doc.data() });
+    });
+    return DOCS;
+  };
+
+  // get all documents in a collection that meet the filter criteria, a valid filter object
+  getAllWhere = async (filter) => {
+    const myQuery = query(
+      this.collectionReference,
+      where(filter.part1, filter.operator, filter.part2)
+    );
+
+    const QUERY_SNAPSHOT = await getDocs(myQuery);
     const DOCS = [];
     QUERY_SNAPSHOT.forEach((doc) => {
       DOCS.push({ id: doc.id, ...doc.data() });

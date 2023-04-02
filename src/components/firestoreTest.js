@@ -40,14 +40,19 @@ function FirestoreTest() {
 
   const testUpdateFullDoc = async () => {
     setIsLoading(true);
-    const result = await testDataDB.updateFullDoc(updateDocId, { user: "John Doe Reloaded", text: text2 });
+    const result = await testDataDB.updateFullDoc(updateDocId, {
+      user: "John Doe Reloaded",
+      text: text2,
+    });
     setResults([{ message: `Document updated: ${result}` }]);
     setIsLoading(false);
   };
 
   const testUpdatePartialDoc = async () => {
     setIsLoading(true);
-    const result = await testDataDB.updatePartialDoc(updatePartialDocId, { user: "John Doe partialUpdateNameChange" });
+    const result = await testDataDB.updatePartialDoc(updatePartialDocId, {
+      user: "John Doe partialUpdateNameChange",
+    });
     setResults([{ message: `Document updated: ${result}` }]);
     setIsLoading(false);
   };
@@ -62,11 +67,15 @@ function FirestoreTest() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">
-        Firestore Test {isLoading && <span> Loading data over the internet...</span>}
+        Firestore Test{" "}
+        {isLoading && <span> Loading data over the internet...</span>}
       </h1>
 
       <div className="flex flex-wrap gap-4">
-        <form onSubmit={(e) => e.preventDefault()} className="items-center justify-center sm:flex">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="items-center justify-center sm:flex"
+        >
           <input
             type="text"
             placeholder="test text"
@@ -75,18 +84,27 @@ function FirestoreTest() {
               setText(event.target.value);
             }}
           />
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={testCreate}>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            onClick={testCreate}
+          >
             Create document
           </button>
         </form>
       </div>
       <div className="mt-4">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={testGetAll}>
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          onClick={testGetAll}
+        >
           Get all documents
         </button>
       </div>
       <div className="mt-4">
-        <form onSubmit={(e) => e.preventDefault()} className="items-center justify-center sm:flex">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="items-center justify-center sm:flex"
+        >
           <input
             type="text"
             placeholder="docId"
@@ -104,7 +122,10 @@ function FirestoreTest() {
         </form>
       </div>
       <div className="mt-4">
-        <form onSubmit={(e) => e.preventDefault()} className="items-center justify-center sm:flex">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="items-center justify-center sm:flex"
+        >
           <input
             type="text"
             placeholder="docID"
@@ -130,7 +151,10 @@ function FirestoreTest() {
         </form>
       </div>
       <div className="mt-4">
-        <form onSubmit={(e) => e.preventDefault()} className="items-center justify-center sm:flex">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="items-center justify-center sm:flex"
+        >
           <input
             type="text"
             placeholder="docID"
@@ -148,7 +172,10 @@ function FirestoreTest() {
         </form>
       </div>
       <div className="mt-4">
-        <form onSubmit={(e) => e.preventDefault()} className="items-center justify-center sm:flex">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="items-center justify-center sm:flex"
+        >
           <input
             type="text"
             placeholder="docID"
@@ -157,7 +184,10 @@ function FirestoreTest() {
               setDocIdToDelete(event.target.value);
             }}
           />
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={testRemove}>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            onClick={testRemove}
+          >
             Remove document
           </button>
         </form>
