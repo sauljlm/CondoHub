@@ -1,6 +1,5 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
-import { getDocs, addDoc, doc } from "firebase/firestore";
 import DBAccess from "../utils/dbAccess";
 import Dropdown from "../components/common/inputs/dropdown";
 import { loginContext } from "../../src/appContext";
@@ -20,6 +19,7 @@ function ReservationForm() {
   const userContext = useContext(loginContext);
 
   const [userUid, setUserUid] = useState("");
+  const [userCondoNumber, setUserCondoNumber] = useState("condoNumber");
   const [amenityNameSelected, setAmenityNameSelected] = useState("");
   const [reservationDate, setReservationDate] = useState(getToday());
   const [reservationTime, setReservationTime] = useState("");
@@ -82,6 +82,7 @@ function ReservationForm() {
   useEffect(() => {
     retrieveAllAmenities();
     setUserUid(userContext.uid);
+    setUserCondoNumber(userContext.aditionalData.condoNumber);
     retrieveAllUserReservations();
   }, []);
 
@@ -92,9 +93,11 @@ function ReservationForm() {
   const createReservation = async () => {
     await reservationDB.create({
       userUid: userUid,
+      condoNumber: userCondoNumber,
       amenitySelected: amenityNameSelected,
       reservationDate: reservationDate,
       reservationTime: reservationTime,
+      status: "Aprobación pendiente",
     });
     retrieveAllUserReservations();
     availableAmenityTimeblocks();
@@ -179,6 +182,7 @@ function ReservationForm() {
                   <th className="py-3 px-6">Amenidad</th>
                   <th className="py-3 px-6">Fecha</th>
                   <th className="py-3 px-6">Horario</th>
+                  <th className="py-3 px-6">Estado</th>
                   <th className="py-3 px-6"></th>
                 </tr>
               </thead>
@@ -194,13 +198,10 @@ function ReservationForm() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       {item.reservationTime}
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {item.status}
+                    </td>
                     <td className="text-right px-6 whitespace-nowrap">
-                      {/* <a
-                        href="javascript:void()"
-                        className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                      >
-                        Editar
-                      </a> */}
                       <button
                         className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
                         onClick={() => deleteReservation(item.id)}

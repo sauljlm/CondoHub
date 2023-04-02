@@ -3,6 +3,7 @@ import UserProfile from "../userProfile";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Amenities from "../amenities.js";
 import RegistrationForm from "../reservationForm.js";
+import AdminReservation from "../adminReservation.js";
 import Playground from "../playground.js";
 
 const MainContent = () => {
@@ -11,7 +12,14 @@ const MainContent = () => {
       <Routes>
         <Route path="/profile" element={<UserProfile></UserProfile>} />
         <Route path="/amenities" element={<Amenities></Amenities>} />
-        <Route path="/reservationForm" element={<RegistrationForm></RegistrationForm>} />
+        <Route
+          path="/reservationForm"
+          element={<RegistrationForm></RegistrationForm>}
+        />
+        <Route
+          path="/adminReservation"
+          element={<AdminReservation></AdminReservation>}
+        />
         <Route path="/playground" element={<Playground></Playground>} />
       </Routes>
       {/* <UserProfile></UserProfile> */}

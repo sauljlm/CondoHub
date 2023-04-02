@@ -18,7 +18,9 @@ const SideNav = () => {
         <ul className="list-none ">
           <li className="flex flex-row w-full justify-center mb-10">
             <span className="font-semibold italic tracking-widest">
-              {userContext && userContext.aditionalData && userContext.aditionalData.condoName
+              {userContext &&
+              userContext.aditionalData &&
+              userContext.aditionalData.condoName
                 ? userContext.aditionalData.condoName
                 : "Loading..."}
             </span>
@@ -74,6 +76,19 @@ const SideNav = () => {
                 <i className="bx bx-calendar"></i>
               </span>
               <span className="ml-3">Reservaciones</span>
+            </button>
+          </li>
+          <li className="my-px">
+            <button
+              onClick={() => {
+                handleClick("adminReservation");
+              }}
+              className="flex flex-row w-full my-6 items-center h-12 px-4 rounded-lg text-gray-300 hover:bg-gray-700"
+            >
+              <span className="flex items-center justify-center text-lg text-gray-400">
+                <i className="bx bx-calendar"></i>
+              </span>
+              <span className="ml-3">ADMIN: Reservaciones</span>
             </button>
           </li>
         </ul>
