@@ -28,7 +28,6 @@ function ReservationForm() {
     []
   );
   const [allUserReservations, setAllUserReservations] = useState([]);
-  const [allReservations, setAllReservations] = useState([]);
   const [amenitiesMap, setAmenitiesMap] = useState(new Map());
 
   const retrieveAllAmenities = async () => {
@@ -78,8 +77,6 @@ function ReservationForm() {
     console.log(amenityNameSelected);
     console.log("allDateReservations");
     console.log(allDateReservations);
-    console.log("uniqueValues");
-    console.log(uniqueValues);
   };
 
   useEffect(() => {
@@ -100,10 +97,13 @@ function ReservationForm() {
       reservationTime: reservationTime,
     });
     retrieveAllUserReservations();
-    console.log(userUid);
-    console.log(amenityNameSelected);
-    console.log(reservationDate);
-    console.log(reservationTime);
+    availableAmenityTimeblocks();
+  };
+
+  const deleteReservation = async (docIdToDelete) => {
+    await reservationDB.remove(docIdToDelete);
+    retrieveAllUserReservations();
+    availableAmenityTimeblocks();
   };
 
   return (
@@ -195,15 +195,15 @@ function ReservationForm() {
                       {item.reservationTime}
                     </td>
                     <td className="text-right px-6 whitespace-nowrap">
-                      <a
+                      {/* <a
                         href="javascript:void()"
                         className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
                       >
                         Editar
-                      </a>
+                      </a> */}
                       <button
-                        href="javascript:void()"
                         className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
+                        onClick={() => deleteReservation(item.id)}
                       >
                         Eliminar
                       </button>
