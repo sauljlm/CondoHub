@@ -49,6 +49,16 @@ const App = () => {
       if (user) {
         // if user is logged in then query the user data from the DB
         user.aditionalData = await usersDB.getOneById(user.uid);
+        user
+          .getIdTokenResult()
+          .then((idTokenResult) => {
+            const customClaims = idTokenResult.claims;
+            console.log("customClaims");
+            console.log(customClaims);
+          })
+          .catch((error) => {
+            // handle error
+          });
       }
       setLoginData(user);
     });
