@@ -5,6 +5,7 @@ import { appContext, loginContext } from "../../appContext.js";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import appLogo from "../../assets/logos/condoHubLogoOnlyTransparentGreenLight.png";
+import NavigationManager from "../../utils/navigationManager.js";
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -12,21 +13,10 @@ const Navbar = () => {
   const [pathname, setPathname] = useState(window.location.pathname);
   const context = useContext(appContext);
   const userContext = useContext(loginContext);
+  const navigationManager = new NavigationManager();
   useEffect(() => {
+    navigationManager.manageUsersAccess();
     setPathname(window.location.pathname);
-  });
-  useEffect(() => {
-    if (userContext !== null && !window.location.pathname.includes("app")) {
-      navigate("/app");
-      localStorage.setItem("email", userContext.email);
-      userContext.displayName ? localStorage.setItem("userName", userContext.displayName.toString()) : null;
-      localStorage.setItem("uid", userContext.uid);
-      return;
-    }
-    if (userContext === null && window.location.pathname.includes("app")) {
-      navigate("/");
-      return;
-    }
   });
 
   let navigation = [];

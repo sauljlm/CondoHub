@@ -20,16 +20,14 @@ function LogOut({ userData, onClick }) {
   };
 
   return (
-    <div>
-      <button
-        type="submit"
-        // className="flex items-center justify-center px-3 py-3 rounded-lg w-60 font-semibold text-sm duration-150 text-white bg-blue-900 hover:bg-red-700 active:bg-red-800"
-        onClick={() => {
-          handleClick();
-        }}
-      >
-        Cerrar sesión
-      </button>
+    <div
+      className="flex items-center h-full w-full"
+      onClick={() => {
+        handleClick();
+      }}
+      type="submit"
+    >
+      <div className="pl-7">Cerrar sesión</div>
     </div>
   );
 }

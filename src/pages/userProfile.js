@@ -10,7 +10,7 @@ const UserProfile = () => {
   console.log(userContext);
 
   return (
-    <div className="h-full w-100 bg-gray-100 flex flex-col items-center justify-center">
+    <div className=" flex flex-col items-center justify-center m-20">
       <div className="bg-white rounded-lg shadow-lg p-8 h-2/3 w-2/3 overflow-auto">
         <div className="flex justify-center mb-8">
           <img

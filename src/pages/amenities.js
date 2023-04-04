@@ -90,7 +90,7 @@ const Amenities = () => {
             }}
           />
         </div>
-        <div class="flex justify-between">
+        <div className="flex justify-between">
           <h3 className="text-1xl font-bold mb-5">Horarios</h3>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
+// // cloud funtions are deployed with the command: firebase deploy --only functions
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
@@ -34,13 +35,13 @@ exports.sendEmailAndSetCustomClaim = functions.auth.user().onCreate(async (user)
   const { email } = user;
 
   // Set the custom claim based on the email address
-  const customClaims = { user: true, admin: false };
+  const roles = ["user"];
   if (email === functions.config().gmail.email) {
-    customClaims.admin = true;
+    roles.push("admin");
   }
 
   // Update the user's custom claims
-  await admin.auth().setCustomUserClaims(user.uid, customClaims);
+  await admin.auth().setCustomUserClaims(user.uid, { appRoles: roles });
 
   // Get the email details from the user's data
   const { displayName, photoURL } = user;
