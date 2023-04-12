@@ -6,8 +6,8 @@ const OurCustomers = () => {
 
   return (
     <section ref={context.ourCustomersRef} className="py-14" id="ourCustomers">
-      <div className="max-w-screen-xl mx-auto px-4 md:px-8">
-        <div className="max-w-3xl mx-auto flex">
+      <div className="max-w-screen-xl mx-auto px-4 md:px-8 md:flex-col">
+        <div className="max-w-3xl mx-auto md:flex">
           <figure className="p-10">
             <blockquote>
               <p className="text-gray-800 text-xl text-center font-semibold sm:text-2xl">

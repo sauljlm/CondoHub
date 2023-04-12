@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import LogOut from "../signIn/logout";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { loginContext } from "../../appContext.js";
@@ -23,15 +22,14 @@ const SideNav = () => {
   }, [userContext]);
 
   let userButtons = [
-    ["profile", "Perfil de usuario"],
     ["news", "Noticias"],
     ["amenities", "Amenidades"],
     ["reservationForm", "Reservaciones"],
   ];
 
   let adminButtons = [
-    ["profile", "Perfil de usuario"],
     ["news", "Noticias"],
+    ["manageNews", "Administrar Noticias"],
     ["amenities", "Amenidades"],
     ["reservationForm", "Reservaciones"],
     ["adminReservation", "Administrar Reservaciones"],
@@ -67,11 +65,11 @@ const SideNav = () => {
           })}
         </ul>
       </div>
-      <div className="my-px py-7">
+      {/* <div className="my-px py-7">
         <button className="flex flex-row w-full items-center text-left h-12 rounded-lg text-gray-300 hover:bg-gray-700">
           <LogOut></LogOut>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

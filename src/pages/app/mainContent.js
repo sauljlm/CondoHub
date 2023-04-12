@@ -4,6 +4,8 @@ import Amenities from "../amenities.js";
 import RegistrationForm from "../reservationForm.js";
 import AdminReservation from "../adminReservation.js";
 import Playground from "../playground.js";
+import NewsPage from "../newsPage.js";
+import ManageNewsPage from "../manageNewsPage.js";
 
 const MainContent = () => {
   return (
@@ -14,6 +16,9 @@ const MainContent = () => {
         <Route path="/reservationForm" element={<RegistrationForm></RegistrationForm>} />
         <Route path="/adminReservation" element={<AdminReservation></AdminReservation>} />
         <Route path="/playground" element={<Playground></Playground>} />
+        <Route path="/news" element={<NewsPage></NewsPage>} />
+        <Route path="/manageNews" element={<ManageNewsPage></ManageNewsPage>} />
+        <Route path="/*" element={<NewsPage></NewsPage>} />
       </Routes>
     </div>
   );

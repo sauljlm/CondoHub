@@ -27,7 +27,7 @@ function LogOut({ userData, onClick }) {
       }}
       type="submit"
     >
-      <div className="pl-7">Cerrar sesión</div>
+      <div className="pl">Cerrar sesión</div>
     </div>
   );
 }

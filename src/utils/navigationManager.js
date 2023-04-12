@@ -18,7 +18,7 @@ class NavigationManager {
     }
     //User is logged in is not an admin page, redirect to App
     if (userContext !== null && userContext?.aditionalData?.roles?.indexOf("admin") === -1) {
-      if (window.location.pathname.includes("adminReservation")) {
+      if (window.location.pathname.includes("adminReservation") || window.location.pathname.includes("manageNews")) {
         navigate("/app/");
       }
     }

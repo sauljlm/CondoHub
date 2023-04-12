@@ -1,11 +1,15 @@
 //Floatui component https://www.floatui.com/
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
-import { appContext, loginContext } from "../../appContext.js";
+import { appContext, loginContext } from "../../../appContext.js";
+import { CgProfile } from "react-icons/cg";
+import { BsBell } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import appLogo from "../../assets/logos/condoHubLogoOnlyTransparentGreenLight.png";
-import NavigationManager from "../../utils/navigationManager.js";
+import appLogo from "../../../assets/logos/condoHubLogoOnlyTransparentGreenLight.png";
+import NavigationManager from "../../../utils/navigationManager.js";
+import ProfilePopup from "./profilePopup.js";
+import NotificationsPopup from "./notificationsPopup.js";
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -13,11 +17,20 @@ const Navbar = () => {
   const [pathname, setPathname] = useState(window.location.pathname);
   const context = useContext(appContext);
   const userContext = useContext(loginContext);
+  const [photoURL, setPhotoURL] = useState(userContext?.photoURL);
   const navigationManager = new NavigationManager();
+  const [displayProfilePopup, setDisplayProfilePopup] = useState(false);
+  const [displayNotificationsPopup, setDisplayNotificationsPopup] = useState(false);
+  const profileButtonRef = useRef(null);
+  const notificationsButtonRef = useRef(null);
   useEffect(() => {
     navigationManager.manageUsersAccess();
     setPathname(window.location.pathname);
   });
+
+  useEffect(() => {
+    setPhotoURL(userContext?.photoURL);
+  }, [userContext?.photoURL]);
 
   let navigation = [];
 
@@ -46,6 +59,14 @@ const Navbar = () => {
     window.scrollTo({ behavior: "smooth", top: 0 });
   };
 
+  const clickProfile = () => {
+    setDisplayProfilePopup(!displayProfilePopup);
+  };
+
+  const clickNotifications = () => {
+    setDisplayNotificationsPopup(!displayNotificationsPopup);
+  };
+
   return (
     <nav className="bg-stone-900 w-full border-b sticky top-0 z-50 md:border-0 mt:mb-5">
       <div
@@ -57,7 +78,9 @@ const Navbar = () => {
           <button
             className="flex flex-row items-center justify-between"
             onClick={() => {
-              handleClick(context, { path: "/" });
+              pathname.includes("app") && userContext !== null
+                ? navigate("/app/news")
+                : handleClick(context, { path: "/" });
             }}
           >
             <img src={appLogo} width={50} height={50} alt="CondoHUB UI logo" />
@@ -132,12 +155,26 @@ const Navbar = () => {
         )}
         {pathname.includes("app") && userContext !== null && (
           <div className="flex items-center px-10 max-w  mx-auto md:flex md:px-1 max-w-full ml-6 h-20">
-            <a
-              href="#login"
-              className="py-3 px-4 mr-5 w-auto text-white border-lightGreenTheme border-2 hover:bg-greenTheme hover:border-greenTheme hover:text-black rounded-md shadow"
+            <button
+              ref={notificationsButtonRef}
+              className="w-auto rounded-full mx-6"
+              onClick={() => clickNotifications()}
             >
-              {userContext.email}
-            </a>
+              <BsBell className="w-fit rounded-full text-white h-11 text-4xl p-3 hover:bg-zinc-700 "></BsBell>
+            </button>
+            <button
+              ref={profileButtonRef}
+              className="w-auto rounded-full text-white text-4xl mr-4 hover:border-lightGreenTheme "
+              onClick={() => clickProfile()}
+            >
+              {console.log(photoURL)}
+              {(photoURL === null || photoURL === undefined) && <CgProfile className="text-4xl "></CgProfile>}
+              {photoURL !== null && photoURL !== undefined && (
+                <img src={photoURL} alt="Imagen de perfil" className="w-9 h-9 rounded-full" />
+              )}
+            </button>
+            <NotificationsPopup display={displayNotificationsPopup} buttonRef={notificationsButtonRef} />
+            <ProfilePopup display={displayProfilePopup} buttonRef={profileButtonRef} />
           </div>
         )}
       </div>

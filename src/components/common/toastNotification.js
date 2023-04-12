@@ -33,7 +33,7 @@ const ToastNotification = () => {
         <div
           id="toast-success"
           //   className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex items-center w-full max-w-md p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-darkBlueTheme"
-          className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex items-center w-full max-w-md p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-darkBlueTheme"
+          className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex items-center w-full max-w-md p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-zinc-800"
           role="alert"
         >
           <div

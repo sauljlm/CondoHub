@@ -1,11 +1,8 @@
 import React from "react";
-import GoogleSignIn from "../components/signIn/googleSignIn";
 import { useNavigate } from "react-router-dom";
-import { FaFacebook } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { MdEmail } from "react-icons/md";
-import GoogleLogin from "../components/login/googleLogin";
-import FacebookLogin from "../components/login/facebookLogin";
+import GoogleLogin from "../../components/login/googleLogin";
+import FacebookLogin from "../../components/login/facebookLogin";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -25,17 +22,21 @@ const Login = () => {
         <div>
           <GoogleLogin className="m-10"></GoogleLogin>
         </div>
-
         <div>
-          {/* className="flex items-center justify-start py-3 rounded-lg w-80 font-semibold text-sm duration-150 text-black bg-neutral-200 hover:bg-red-400 hover:text-white active:bg-red-800 mb-7" */}
           <FacebookLogin className="m-10"></FacebookLogin>
         </div>
-
         <div>
-          {/* className="flex items-start justify-start py-3 rounded-lg w-80 font-semibold text-sm duration-150 text-black bg-neutral-200 hover:bg-greenTheme hover:text-white active:bg-teal-800 mb-7" */}
-          <GoogleLogin className="m-10"></GoogleLogin>
+          <button
+            type="submit"
+            className="flex items-start justify-start py-3 rounded-lg w-80 font-semibold text-sm duration-150 text-black bg-neutral-200 hover:bg-greenTheme hover:text-white active:bg-teal-800 mb-7"
+            onClick={() => {
+              handleClick("/login/email");
+            }}
+          >
+            <MdEmail className="mx-8 text-lg text-gray-700" />
+            Iniciar sesión con Email
+          </button>
         </div>
-        {/* <MdEmail className="mx-8 text-lg text-gray-700" /> */}
 
         <p className="text-center text-gray-500 text-sm">
           ¿Aun no tienes una cuenta?{" "}
@@ -45,7 +46,7 @@ const Login = () => {
               handleClick("/sign-in");
             }}
           >
-            Registrarse
+            Regístrate aquí
           </button>
         </p>
       </div>

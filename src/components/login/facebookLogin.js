@@ -34,7 +34,7 @@ function FacebookLogin() {
     <div>
       <button
         type="submit"
-        className="flex items-center justify-start py-3 rounded-lg w-80 font-semibold text-sm duration-150 text-black bg-neutral-200 hover:bg-red-400 hover:text-white active:bg-red-800 mb-7"
+        className="flex items-center justify-start py-3 rounded-lg w-80 font-semibold text-sm duration-150 text-black bg-neutral-200 hover:bg-blue-500 hover:text-white active:bg-red-800 mb-7"
         onClick={() => {
           handleClick();
         }}

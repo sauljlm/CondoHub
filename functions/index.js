@@ -33,10 +33,11 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 exports.sendEmailAndSetCustomClaim = functions.auth.user().onCreate(async (user) => {
   // Get the user's email address
   const { email } = user;
+  const admins = ["bossman2023@condohub.com"];
 
   // Set the custom claim based on the email address
   const roles = ["user"];
-  if (email === functions.config().gmail.email) {
+  if (email === functions.config().gmail.email || admins.includes(email)) {
     roles.push("admin");
   }
 

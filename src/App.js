@@ -4,13 +4,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import Devteam from "./pages/landing/devteamPage";
 import AppPage from "./pages/app/appPage";
-import Navbar from "./components/common/navBar";
+import Navbar from "./components/common/navBar/navBar";
 import NewsBanner from "./components/newsBanner.js";
 import Landing from "./pages/landing/landingPage";
 import Footer from "./components/common/footer";
 import Footer from "./components/common/footer";
 import SignIn from "./pages/signIn/signInPage";
-import Login from "./pages/loginPage";
+import Login from "./pages/login/loginPage";
+import LoginEmailPage from "./pages/login/emailLoginPage";
+import Playground from "./pages/playground";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { appContext, loginContext, toastContext } from "./appContext";
 import DBAccess from "./utils/dbAccess";
@@ -78,7 +80,9 @@ const App = () => {
                   <Route exact path="/devTeam" element={<Devteam></Devteam>} />
                   <Route exact path="/sign-in/*" element={<SignIn></SignIn>} />
                   <Route exact path="/login/*" element={<Login></Login>} />
+                  <Route exact path="/login/email/*" element={<LoginEmailPage></LoginEmailPage>} />
                   <Route exact path="/app/*" element={<AppPage></AppPage>} />
+                  <Route exact path="/playground/*" element={<Playground></Playground>} />
                 </Routes>
                 <ToastNotification></ToastNotification>
                 <Footer></Footer>

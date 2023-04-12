@@ -6,7 +6,7 @@ const Playground = () => {
   return (
     <div>
       <FirestoreTest></FirestoreTest>
-      <Revervations></Revervations>
+      {/* <Revervations></Revervations> */}
     </div>
   );
 };
