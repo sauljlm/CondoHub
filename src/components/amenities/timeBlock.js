@@ -1,31 +1,23 @@
 import React, { useState } from 'react';
 
 function TimeBlock(props) {
+    const [selectedStartTime, setSelectedStartTime] = useState(props.timeBlock.startTime);
+    const [selectedEndTime, setSelectedEndTime] = useState(props.timeBlock.endTime);
 
-    const [selectedStartTime, setSelectedStartTime] = useState('09:00');
-    const [selectedEndTime, setSelectedEndTime] = useState('09:00');
+    const handleStartTimeChange = (e) => {
 
-    const updateTimeBlock = async () => {
-        
-        console.log(props.id)
-        console.log(props.timeBlocks.length)
         const updatedItems = props.timeBlocks.map(item => {
             if (item.id === props.id) {
-                item.startTime = selectedStartTime;
-                item.endTime = selectedEndTime;
+                item.startTime = e.target.value;
                 return item
             }
             return item;
         });
         props.setTimeBlocks(updatedItems);
-        console.log(props.timeBlocks)
-    };
 
-
-    const handleStartTimeChange = (e) => {
         const value = e.target.value;
-        const minTime = '09:00';
-        const maxTime = '18:00';
+        const minTime = '00:00';
+        const maxTime = selectedEndTime;
 
         if (value < minTime) {
         setSelectedStartTime(minTime);
@@ -37,9 +29,19 @@ function TimeBlock(props) {
     };
 
     const handleEndTimeChange = (e) => {
+
+        const updatedItems = props.timeBlocks.map(item => {
+            if (item.id === props.id) {
+                item.endTime = e.target.value;
+                return item
+            }
+            return item;
+        });
+        props.setTimeBlocks(updatedItems);
+
         const value = e.target.value;
-        const minTime = '09:00';
-        const maxTime = '18:00';
+        const minTime = selectedStartTime;
+        const maxTime = '23:59';
 
         if (value < minTime) {
         setSelectedEndTime(minTime);
@@ -61,9 +63,8 @@ function TimeBlock(props) {
                     required
                     value={selectedStartTime}
                     onChange={(event) => {
-                        setSelectedStartTime(event.target.value);
                         handleStartTimeChange(event);
-                        updateTimeBlock();
+                        setSelectedStartTime(event.target.value);
                     }}
                     className="block w-full mr-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                 />
@@ -77,9 +78,8 @@ function TimeBlock(props) {
                     required
                     value={selectedEndTime}
                     onChange={(event) => {
-                        setSelectedEndTime(event.target.value);
                         handleEndTimeChange(event);
-                        updateTimeBlock();
+                        setSelectedEndTime(event.target.value);
                     }}
                     className="block w-full ml-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                 />
