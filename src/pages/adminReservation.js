@@ -1,11 +1,12 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
 import DBAccess from "../utils/dbAccess";
-import { loginContext } from "../appContext";
+import { loginContext, toastContext } from "../appContext";
 
 function AdminReservation() {
   const reservationDB = new DBAccess("Reservations");
   const userContext = useContext(loginContext);
+  const toastPopup = useContext(toastContext);
 
   const [allReservations, setAllReservations] = useState([]);
 
@@ -18,12 +19,24 @@ function AdminReservation() {
     retrieveAllReservations();
   }, []);
 
-  const approveReservation = async (docIdToUpdate) => {
-    console.log("APPROVE " + docIdToUpdate);
-  };
-
-  const rejectReservation = async (docIdToUpdate) => {
-    console.log("REJECT " + docIdToUpdate);
+  const updateReservationStatus = async (doc, updatedStatus) => {
+    if (doc.status === "Rechazado" && updatedStatus === "Aprobado") {
+      toastPopup.set({
+        message: "No es posible aprobar una reservación después de rechazarla.",
+        type: "error",
+        timeOut: 4500,
+      });
+      return;
+    }
+    doc.status = updatedStatus;
+    await reservationDB.updatePartialDoc(doc.id, doc);
+    retrieveAllReservations();
+    toastPopup.set({
+      message: "Reservación actualizada exitosamente.",
+      type: "success",
+      timeOut: 4500,
+    });
+    return;
   };
 
   return (
@@ -70,13 +83,17 @@ function AdminReservation() {
                     <td className="text-right px-6 whitespace-nowrap">
                       <button
                         className="py-2 leading-none px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                        onClick={() => approveReservation(item.id)}
+                        onClick={() =>
+                          updateReservationStatus(item, "Aprobado")
+                        }
                       >
                         Aprobar
                       </button>
                       <button
                         className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
-                        onClick={() => rejectReservation(item.id)}
+                        onClick={() =>
+                          updateReservationStatus(item, "Rechazado")
+                        }
                       >
                         Rechazar
                       </button>

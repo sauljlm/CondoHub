@@ -2,7 +2,7 @@ import React from "react";
 import { useContext, useState, useEffect } from "react";
 import DBAccess from "../utils/dbAccess";
 import Dropdown from "../components/common/inputs/dropdown";
-import { loginContext } from "../../src/appContext";
+import { loginContext, toastContext } from "../../src/appContext";
 
 function ReservationForm() {
   const getToday = () => {
@@ -17,6 +17,7 @@ function ReservationForm() {
   const reservationDB = new DBAccess("Reservations");
   const amenitiesDB = new DBAccess("Amenities");
   const userContext = useContext(loginContext);
+  const toastPopup = useContext(toastContext);
 
   const [userUid, setUserUid] = useState("");
   const [userCondoNumber, setUserCondoNumber] = useState("condoNumber");
@@ -60,45 +61,79 @@ function ReservationForm() {
     );
 
     const filter = {
-      part1: "reservationDate",
+      part1: "amenitySelected",
       operator: "==",
-      part2: reservationDate,
+      part2: amenityNameSelected,
     };
-    const allDateReservations = await reservationDB.getAllWhere(filter);
-    const filteredData = allDateReservations.filter(
-      (item) => item.amenitySelected === amenityNameSelected
+    const allAmenityReservations = await reservationDB.getAllWhere(filter);
+    const filteredData = allAmenityReservations.filter(
+      (item) =>
+        item.reservationDate === reservationDate && item.status !== "Rechazado"
     );
     const timeArray = filteredData.map((item) => item.reservationTime);
     const uniqueValues = timeBlocksArray.filter(
       (value) => !timeArray.includes(value)
     );
     setAvailableTimeBlockOptions(uniqueValues);
-
-    console.log(amenityNameSelected);
-    console.log("allDateReservations");
-    console.log(allDateReservations);
   };
 
   useEffect(() => {
     retrieveAllAmenities();
-    setUserUid(userContext.uid);
-    setUserCondoNumber(userContext.aditionalData.condoNumber);
+    setUserUid(userContext?.uid);
+    setUserCondoNumber(userContext?.aditionalData?.condoNumber);
     retrieveAllUserReservations();
-  }, []);
+  }, [userContext]);
 
   useEffect(() => {
     availableAmenityTimeblocks();
   }, [amenityNameSelected, reservationDate]);
 
   const createReservation = async () => {
-    await reservationDB.create({
-      userUid: userUid,
-      condoNumber: userCondoNumber,
-      amenitySelected: amenityNameSelected,
-      reservationDate: reservationDate,
-      reservationTime: reservationTime,
-      status: "Aprobación pendiente",
-    });
+    try {
+      const reservationYear = reservationDate.substring(0, 4);
+      const reservationMonth = reservationDate.substring(5, 7) - 1; // months are zero-based
+      const reservationDay = reservationDate.substring(8, 10);
+      const reservation = new Date(
+        reservationYear,
+        reservationMonth,
+        reservationDay
+      );
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // set the time to midnight
+
+      if (reservation < today) {
+        toastPopup.set({
+          message: "No es posible crear una reservación en una fecha pasada.",
+          type: "error",
+          timeOut: 4500,
+        });
+        return; // exit the function if the reservation date is in the past
+      }
+
+      const response = await reservationDB.create({
+        userUid: userUid,
+        condoNumber: userCondoNumber,
+        amenitySelected: amenityNameSelected,
+        reservationDate: reservationDate,
+        reservationTime: reservationTime,
+        status: "Aprobación pendiente",
+      });
+      if (response) {
+        toastPopup.set({
+          message: "Reservación creada exitosamente.",
+          type: "success",
+          timeOut: 4500,
+        });
+      }
+    } catch (error) {
+      console.error(error); // log the error to the console
+      toastPopup.set({
+        message: "No hay horarios disponibles, seleccione otra fecha.",
+        type: "error",
+        timeOut: 4500,
+      });
+    }
     retrieveAllUserReservations();
     availableAmenityTimeblocks();
   };
