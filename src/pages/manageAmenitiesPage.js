@@ -56,7 +56,7 @@ const Amenities = () => {
   };
 
   const newTimeBlock = () => {
-    timeBlockData = {
+    const timeBlockData = {
       id: timeBlocks.length + 1,
       startTime: "",
       endTime: "",
@@ -139,7 +139,10 @@ const Amenities = () => {
       for (let j = i + 1; j < timeBlocks.length; j++) {
         const block2 = timeBlocks[j];
         // check if the time blocks overlap
-        if (block1.startTime < block2.endTime && block1.endTime > block2.startTime) {
+        if (
+          block1.startTime < block2.endTime &&
+          block1.endTime > block2.startTime
+        ) {
           // the two time blocks overlap
           setIsTimeBlockValid(false);
           return false;
@@ -153,12 +156,19 @@ const Amenities = () => {
 
   return (
     <div className=" p-10 bg-gray-100">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Administrar amenidades</h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">
+        Administrar amenidades
+      </h1>
       <div className="flex">
         <div className=" flex items-start justify-center bg-white rounded-lg overflow-hidden shadow-lg p-10">
           <div className="max-w-md">
-            <h3 className="text-1xl font-bold mb-5">Registrar nueva Amenidad</h3>
-            <form onSubmit={(e) => e.preventDefault()} className="mt-8 m-10 w-[272px]">
+            <h3 className="text-1xl font-bold mb-5">
+              Registrar nueva Amenidad
+            </h3>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="mt-8 m-10 w-[272px]"
+            >
               <div className="mb-4">
                 <TextInput
                   labelText="Nombre"
@@ -215,16 +225,25 @@ const Amenities = () => {
               </div>
               <div className="mb-4">
                 {timeBlocks.map((result) => (
-                  <TimeBlock id={result.id} setTimeBlocks={setTimeBlocks} timeBlock={result} timeBlocks={timeBlocks} />
+                  <TimeBlock
+                    id={result.id}
+                    setTimeBlocks={setTimeBlocks}
+                    timeBlock={result}
+                    timeBlocks={timeBlocks}
+                  />
                 ))}
               </div>
-              <p className="font-semibold text-red-800">{isTimeBlockValid ? "" : "Bloques de tiempo inválidos"}</p>
+              <p className="font-semibold text-red-800">
+                {isTimeBlockValid ? "" : "Bloques de tiempo inválidos"}
+              </p>
 
               <div className="mt-6 flex justify-end">
                 <button
                   type="submit"
                   className={`mt-10 items-center justify-center px-3 py-3 rounded-lg h-11 w-40 font-semibold text-sm duration-150 text-white bg-greenTheme hover:bg-indigo-500 active:bg-indigo-700 ${
-                    isTimeBlockValid ? "" : "bg-gray-500 hover:bg-gray-700 cursor-not-allowed"
+                    isTimeBlockValid
+                      ? ""
+                      : "bg-gray-500 hover:bg-gray-700 cursor-not-allowed"
                   }`}
                   onClick={() => handleSubmit()}
                   disabled={!isTimeBlockValid}
@@ -261,8 +280,12 @@ const Amenities = () => {
                 {items.map((data, idx) => (
                   <tr key={idx}>
                     <td className="px-3 py-4 whitespace-nowrap">{data.name}</td>
-                    <td className="px-3 py-4 whitespace-nowrap">{data.description}</td>
-                    <td className="px-3 py-4 whitespace-nowrap">{data.price}</td>
+                    <td className="px-3 py-4 whitespace-nowrap">
+                      {data.description}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap">
+                      {data.price}
+                    </td>
                     <td className=" py-4 whitespace-nowrap">
                       {data.timeBlocks.map((element) => {
                         return (
