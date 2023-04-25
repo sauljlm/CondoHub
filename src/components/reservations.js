@@ -24,24 +24,22 @@ export default () => {
 
   const getReservation = async () => {
     console.log("Descargando lista completa de reservaciones...");
-    await getDocs(collection(db, "ReservationData")).then((querySnapshot)=> {
+    await getDocs(collection(db, "ReservationData")).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
       });
-    })
+    });
   };
 
   return (
     <section className="max-w-xl mx-auto px-100 mb-20 mt-50" id="reservations">
       <div className="space-y-4 text-center">
         <h1 className="text-3xl text-gray-800 font-semibold">RESERVACION DE AMENIDADES</h1>
-        <p className="text-gray-600 leading-relaxed">
-          Acceso exclusivo a amenidades de su condominio
-        </p>
+        <p className="text-gray-600 leading-relaxed">Acceso exclusivo a amenidades de su condominio</p>
       </div>
       <div className="mt-5">
         <form onSubmit={(e) => e.preventDefault()} className="items-center justify-center sm:flex">
-          <input 
+          <input
             type="email"
             placeholder="Correo electrónico"
             className="text-gray-500 w-full p-3 rounded-md border outline-none focus:border-indigo-600"
@@ -49,7 +47,7 @@ export default () => {
               setEmail(event.target.value);
             }}
           />
-           <input
+          <input
             type="text"
             placeholder="Amenidad"
             className="text-gray-500 w-full p-3 rounded-md border outline-none focus:border-indigo-600"
@@ -57,7 +55,7 @@ export default () => {
               setAmenityReserved(event.target.value);
             }}
           />
-           <input
+          <input
             type="date"
             placeholder="Fecha"
             className="text-gray-500 w-full p-3 rounded-md border outline-none focus:border-indigo-600"
@@ -74,14 +72,11 @@ export default () => {
             Crear Reserva
           </button>
         </form>
-        <p className="mt-3 mx-auto text-center max-w-xl text-[15px] text-gray-400">
-        </p>
+        <p className="mt-3 mx-auto text-center max-w-xl text-[15px] text-gray-400"></p>
       </div>
       <div className="space-y-4 text-center P-20">
         <h1 className="text-3xl text-gray-800 font-semibold mt-20">LISTA DE RESERVACIONES DE AMENIDADES</h1>
-        <p className="text-gray-600 leading-relaxed">
-          Consulte la lista de reservaciones que ha realizado.
-        </p>
+        <p className="text-gray-600 leading-relaxed">Consulte la lista de reservaciones que ha realizado.</p>
       </div>
       <div className="mt-5 items-center justify-center sm:flex">
         <button

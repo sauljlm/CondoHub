@@ -31,6 +31,7 @@ const SideNav = () => {
     ["news", "Noticias"],
     ["manageNews", "Administrar Noticias"],
     ["amenities", "Amenidades"],
+    ["manageAmenities", "Administrar Amenidades"],
     ["reservationForm", "Reservaciones"],
     ["adminReservation", "Administrar Reservaciones"],
   ];

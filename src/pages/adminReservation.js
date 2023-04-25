@@ -40,16 +40,10 @@ function AdminReservation() {
   };
 
   return (
-    <div className="mx-auto mt-10">
+    <div className=" p-10 bg-gray-100">
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">Lista general de reservaciones</h1>
       <div className="max-w-5xl mx-auto mt-10 pb-12">
         <div className="max-w-screen-xl mx-auto px-4 md:px-8">
-          <div className="items-start justify-between md:flex">
-            <div className="max-w-lg">
-              <h2 className="text-2xl font-bold mb-5">
-                Lista general de reservaciones
-              </h2>
-            </div>
-          </div>
           <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
             <table className="w-full table-auto text-sm text-left">
               <thead className="bg-gray-50 text-gray-600 font-medium border-b">
@@ -65,35 +59,21 @@ function AdminReservation() {
               <tbody className="text-gray-600 divide-y">
                 {allReservations.map((item, idx) => (
                   <tr key={idx}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.condoNumber}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.amenitySelected}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.reservationDate}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.reservationTime}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.status}
-                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">{item.condoNumber}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{item.amenitySelected}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{item.reservationDate}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{item.reservationTime}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{item.status}</td>
                     <td className="text-right px-6 whitespace-nowrap">
                       <button
                         className="py-2 leading-none px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                        onClick={() =>
-                          updateReservationStatus(item, "Aprobado")
-                        }
+                        onClick={() => updateReservationStatus(item, "Aprobado")}
                       >
                         Aprobar
                       </button>
                       <button
                         className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
-                        onClick={() =>
-                          updateReservationStatus(item, "Rechazado")
-                        }
+                        onClick={() => updateReservationStatus(item, "Rechazado")}
                       >
                         Rechazar
                       </button>

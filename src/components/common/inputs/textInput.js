@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 const TextInput = ({
   labelText,
   errorText,
-  type,
+  type = "text",
   id,
   name = "name",
   placeholder = "placeholder",

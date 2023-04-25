@@ -4,11 +4,16 @@ const Dropdown = ({
   options = ["No option selected"],
   optionName = "Seleccionar",
   setSelectedValue,
+  defaultSelectedValue,
 }) => {
-  const [selection, setSelection] = useState(options[0]);
+  const [selection, setSelection] = useState(defaultSelectedValue || options[0]);
   useEffect(() => {
     setSelectedValue(options[0]);
   }, [options[0]]);
+
+  useEffect(() => {
+    setSelection(defaultSelectedValue);
+  }, [defaultSelectedValue]);
 
   function handleSelectedValue(event) {
     const value = event.target.value;
@@ -20,6 +25,7 @@ const Dropdown = ({
     <div>
       <select
         id="select-option"
+        value={selection}
         onChange={handleSelectedValue}
         className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
       >
